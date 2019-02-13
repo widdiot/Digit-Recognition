@@ -1,11 +1,7 @@
-# USAGE
-# python train_network.py --dataset images --model santa_not_santa.model
-
-# set the matplotlib backend so figures can be saved in the background
-import matplotlib
-matplotlib.use("Agg")
 
 # import the necessary packages
+import matplotlib
+matplotlib.use("Agg")
 from keras.preprocessing.image import ImageDataGenerator
 from keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
@@ -23,15 +19,7 @@ import cv2
 import os
 import imutils
 
-# construct the argument parse and parse the arguments
-ap = argparse.ArgumentParser()
-ap.add_argument("-d", "--dataset", required=True,
-	help="path to input dataset")
-ap.add_argument("-m", "--model", required=True,
-	help="path to output model")
-ap.add_argument("-p", "--plot", type=str, default="plot.png",
-	help="path to output loss/accuracy plot")
-args = vars(ap.parse_args())
+
 
 # initialize the number of epochs to train for, initia learning rate,
 # and batch size
@@ -45,7 +33,7 @@ data = []
 labels = []
 
 # grab the image paths and randomly shuffle them
-imagePaths = sorted(list(paths.list_images("/home/vishay/Music/train_data")))
+imagePaths = sorted(list(paths.list_images("/home/vishay/Pictures/train_data")))
 random.seed(42)
 random.shuffle(imagePaths)
 
@@ -85,7 +73,7 @@ testY = to_categorical(testY, num_classes=10)
 #perfect scenarios get included in the training data.
 #aug = ImageDataGenerator(rotation_range=30, width_shift_range=0.1,
 #	height_shift_range=0.1, shear_range=0.2, zoom_range=0.2,
-	#horizontal_flip=True, fill_mode="nearest")
+	#horizontal_flip=False, fill_mode="nearest")
 #
 # initialize the model
 print("[INFO] compiling model...")
@@ -102,7 +90,7 @@ H = model.fit(trainX, trainY, batch_size=BS,
 
 # save the model to disk
 print("[INFO] serializing network...")
-model.save('/home/vishay/Music/CNN/cnn.h5')
+model.save('/home/vishay/models/CNN/cnn.h5')
 
 # plot the training loss and accuracy
 plt.style.use("ggplot")
